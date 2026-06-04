@@ -182,7 +182,7 @@ data/inputs/
 
 ## Decisiones de arquitectura
 
-Ver [`docs/architecture.md`](./docs/architecture.md) para el detalle. Resumen:
+Ver [`docs/architecture.md`](./docs/INTEGRATION_GUIDE.md) para el detalle. Resumen:
 
 - **Sin Celery/Redis**: análisis sincrónico en `POST /analysis/farms/{id}/analyze`. Timeout HTTP cliente 130 s.
 - **El modelo se entrena offline** (E3–E8). El worker solo hace extracción zonal con `rasterio.mask`.

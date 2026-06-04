@@ -61,8 +61,6 @@ SembraIA/
 │
 ├── docs/                            # Especificaciones
 │   ├── architecture.md              # Decisiones de arquitectura
-│   ├── mvp.md                       # Plan original 5 días
-│   ├── design.md                    # 13 pantallas con prompts
 │   └── data.md                      # Formato de los GeoTIFFs
 │
 ├── .gitignore

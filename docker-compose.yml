@@ -1,0 +1,86 @@
+# docker-compose para desarrollo local
+# Levanta: PostgreSQL/PostGIS, backend, frontend (opcional)
+#
+# Uso:
+#   docker compose up -d db api
+#   docker compose logs -f api
+#   docker compose down  # detener
+#
+# Para regenerar los rasters sinteticos:
+#   docker compose run --rm api python scripts/data/generate_synthetic_rasters.py
+
+services:
+  db:
+    image: postgis/postgis:15-3.4
+    container_name: sembraria_db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: sembraria
+    ports:
+      - "5432:5432"
+    volumes:
+      - sembraria_pgdata:/var/lib/postgresql/data
+      - ./config/db:/docker-entrypoint-initdb.d:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: sembraria_api
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      APP_ENV: development
+      DATABASE_URL: postgresql+psycopg2://postgres:postgres@db:5432/sembraria
+      JWT_SECRET: ${JWT_SECRET:-dev-secret-change-in-production-2026}
+      JWT_ALGORITHM: HS256
+      JWT_EXPIRE_HOURS: "24"
+      JWT_KEY_ID: v1
+      JWT_GRACE_SECONDS: "86400"
+      RASTER_INPUTS_DIR: /home/sembraria/data/inputs
+      RASTER_OUTPUTS_DIR: /home/sembraria/data/outputs
+      API_HOST: 0.0.0.0
+      API_PORT: "8000"
+      CORS_ORIGINS: http://localhost:5173,http://localhost:3000
+      LOGIN_RATE_LIMIT_PER_MINUTE: "10"
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./apps/api:/home/sembraria/apps/api
+      - ./config:/home/sembraria/config
+      - ./scripts:/home/sembraria/scripts
+      - sembraria_outputs:/home/sembraria/data/outputs
+      - sembraria_inputs:/home/sembraria/data/inputs
+    command: >
+      bash -c "
+        python -c 'from sembraria.init_db import init_db; init_db()' &&
+        python -m uvicorn sembraria.main:app --host 0.0.0.0 --port 8000 --reload --log-level info
+      "
+
+  # Frontend opcional (comentar si no se usa)
+  # web:
+  #   build:
+  #     context: ./apps/web
+  #     dockerfile: Dockerfile
+  #   container_name: sembraria_web
+  #   restart: unless-stopped
+  #   depends_on:
+  #     - api
+  #   environment:
+  #     VITE_API_URL: http://localhost:8000/api/v1
+  #   ports:
+  #     - "5173:5173"
+
+volumes:
+  sembraria_pgdata:
+  sembraria_outputs:
+  sembraria_inputs:

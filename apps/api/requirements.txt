@@ -1,0 +1,40 @@
+# ====================================================================
+# SEMBRIA — Backend dependencies (minimo viable)
+# ====================================================================
+# Versiones >=  (floor) para soportar Python 3.14 (released 2024-10)
+# Si tu Python es 3.11/3.12, puedes fijar las versiones exactas.
+
+# === Core ===
+fastapi>=0.118.0
+uvicorn[standard]>=0.32.0
+pydantic>=2.10.0
+pydantic-settings>=2.7.0
+pydantic[email]>=2.10.0
+email-validator>=2.0.0
+python-multipart>=0.0.12
+
+# === Auth ===
+python-jose[cryptography]>=3.3.0
+passlib[bcrypt]>=1.7.4
+bcrypt>=4.0.1
+
+# === Database ===
+sqlalchemy>=2.0.36
+geoalchemy2>=0.16.0
+psycopg2-binary>=2.9.10
+
+# === Geospatial / EO ===
+# NOTA: rasterio y geopandas pueden tardar en compilar/bajar wheels.
+# En Python 3.14, rasterio >= 1.4 es necesario para tener wheels.
+rasterio>=1.4.0
+numpy>=2.0.0
+matplotlib>=3.10.0
+reportlab>=4.2.5
+geopandas>=1.0.1
+shapely>=2.0.6
+pyyaml>=6.0.2
+
+# === HTTP / testing ===
+httpx>=0.27.2
+pytest>=8.3.3
+pytest-asyncio>=0.24.0

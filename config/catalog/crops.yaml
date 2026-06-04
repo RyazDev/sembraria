@@ -1,0 +1,67 @@
+# ====================================================================
+# SEMBRARIA — Catálogo de Cultivos
+# Fuente única de verdad para backend y frontend
+# ====================================================================
+crops:
+  - id: cacao
+    label: "Cacao"
+    scientific: "Theobroma cacao"
+    raster_filename: aptitud_CACAO.tif
+    color: "#7B3F00"
+    description: "Cultivo perenne, requiere suelos drenados, pH 5.0-7.0"
+    min_precipitation_mm: 1500
+    max_precipitation_mm: 2500
+    min_altitude_m: 0
+    max_altitude_m: 1200
+    economic_potential_cop_ha: 4500000
+
+  - id: platano
+    label: "Plátano"
+    scientific: "Musa paradisiaca"
+    raster_filename: aptitud_PLATANO.tif
+    color: "#F4D03F"
+    description: "Cultivo perenne, requiere suelos fértiles, pH 5.5-7.5"
+    min_precipitation_mm: 1200
+    max_precipitation_mm: 2200
+    min_altitude_m: 0
+    max_altitude_m: 2000
+    economic_potential_cop_ha: 3200000
+
+  - id: yuca
+    label: "Yuca"
+    scientific: "Manihot esculenta"
+    raster_filename: aptitud_YUCA.tif
+    color: "#D4A574"
+    description: "Cultivo anual, tolerante a suelos ácidos, pH 4.5-7.0"
+    min_precipitation_mm: 750
+    max_precipitation_mm: 1500
+    min_altitude_m: 0
+    max_altitude_m: 1800
+    economic_potential_cop_ha: 2100000
+
+# Síntesis de mejor cultivo (basado en PDEA Caquetá)
+synthesis:
+  raster_filename: sintesis_mejor_cultivo.tif
+  legend:
+    1: "Café"
+    2: "Cacao"
+    3: "Caucho"
+    4: "Plátano"
+    5: "Yuca"
+    6: "Maíz"
+
+# Clasificación de cobertura
+classification:
+  raster_filename: clasificacion_5clases.tif
+  legend:
+    0: "Pasto"
+    1: "Bosque"
+    2: "Cultivo"
+    3: "Agua"
+    4: "Urbano"
+
+# Stack de features (para validación E3-E8)
+features_stack:
+  raster_filename: stack_54features.tif
+  expected_bands: 54
+  description: "Stack multi-temporal con indices espectrales, SAR, fenología, DEM"

@@ -1,0 +1,148 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* === Sistema base (HSL) === */
+    --background: 120 20% 98%;        /* #FAFAFA con tinte verde muy sutil */
+    --foreground: 0 0% 10%;          /* #1A1A1A */
+
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 10%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 10%;
+
+    --primary: 123 65% 24%;          /* #1B5E20 verde oscuro */
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 142 76% 36%;        /* #00C853 verde claro */
+    --secondary-foreground: 0 0% 100%;
+
+    --muted: 120 16% 96%;
+    --muted-foreground: 0 0% 32%;
+
+    --accent: 142 76% 36%;           /* verde claro */
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 123 65% 14%;      /* verde MUY oscuro para "error" (no rojo) */
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 0 0% 88%;
+    --input: 0 0% 88%;
+    --ring: 123 65% 24%;
+
+    --radius: 0.5rem;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  html, body {
+    @apply bg-background text-foreground;
+    font-family: "Inter", system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    @apply min-h-screen;
+  }
+}
+
+@layer components {
+  .container-app {
+    @apply mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8;
+  }
+
+  /* === Botones consistentes === */
+  .btn-primary {
+    @apply bg-sembriaia-action text-white font-semibold rounded-full px-8 h-14
+           shadow-[0_4px_16px_rgba(0,200,83,0.3)] hover:bg-sembriaia-action-dark
+           transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed
+           inline-flex items-center justify-center gap-2;
+  }
+
+  .btn-secondary {
+    @apply bg-transparent border-2 border-white text-white font-medium rounded-full
+           px-7 h-14 hover:bg-white/10 transition-all duration-200
+           inline-flex items-center justify-center gap-2;
+  }
+
+  .btn-outline {
+    @apply bg-white border border-sembriaia-primary text-sembriaia-primary font-medium
+           rounded-full px-5 h-10 hover:bg-sembriaia-primary hover:text-white
+           transition-all duration-200 inline-flex items-center justify-center gap-2;
+  }
+
+  /* === Cards === */
+  .card-base {
+    @apply bg-white rounded-xl shadow-sm border border-border/40 p-4 sm:p-6
+           transition-all duration-200;
+  }
+
+  /* === Inputs === */
+  .input-base {
+    @apply w-full h-12 px-4 rounded-lg border border-input bg-white
+           focus:outline-none focus:ring-2 focus:ring-sembriaia-action
+           transition-all duration-200 text-sm;
+  }
+
+  /* === Badges semánticos (todos verdes) === */
+  .badge-success {
+    @apply inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full
+           text-xs font-semibold bg-sembriaia-action/10 text-sembriaia-action-dark;
+  }
+
+  .badge-info {
+    @apply inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full
+           text-xs font-semibold bg-sembriaia-primary/10 text-sembriaia-primary;
+  }
+
+  .badge-warn {
+    @apply inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full
+           text-xs font-semibold bg-sembriaia-primary-lighter/15 text-sembriaia-primary-dark;
+  }
+
+  .badge-error {
+    @apply inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full
+           text-xs font-semibold bg-sembriaia-primary-dark/10 text-sembriaia-primary-dark;
+  }
+
+  /* === Alertas inline (reemplazan bg-sembriaia-alert) === */
+  .alert-info {
+    @apply flex items-start gap-2 p-3 rounded-lg bg-sembriaia-primary/5
+           border border-sembriaia-primary/20 text-sm text-sembriaia-primary-dark;
+  }
+
+  .alert-success {
+    @apply flex items-start gap-2 p-3 rounded-lg bg-sembriaia-action/5
+           border border-sembriaia-action/20 text-sm text-sembriaia-action-dark;
+  }
+
+  .alert-error {
+    @apply flex items-start gap-2 p-3 rounded-lg bg-sembriaia-primary-dark/5
+           border border-sembriaia-primary-dark/20 text-sm text-sembriaia-primary-dark;
+  }
+
+  /* === Links con color verde oscuro === */
+  .link-primary {
+    @apply text-sembriaia-primary font-medium hover:text-sembriaia-primary-dark
+           hover:underline transition-colors;
+  }
+}
+
+/* === MapLibre overrides === */
+.maplibregl-popup-content {
+  @apply rounded-xl shadow-lg p-4 font-sans;
+}
+
+.maplibregl-ctrl-group {
+  @apply rounded-lg shadow-md;
+}
+
+.maplibregl-ctrl-group button {
+  @apply transition-colors;
+}

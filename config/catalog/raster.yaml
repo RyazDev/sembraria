@@ -1,0 +1,26 @@
+# ====================================================================
+# SEMBRARIA — Parametros de Raster
+# ====================================================================
+raster:
+  # Resolucion REAL del pipeline E3-E8 (Sentinel-2 / SRTM)
+  pixel_size_m: 30
+  hectares_per_pixel: 0.09
+
+  # Resolucion para datos SINTETICOS del MVP (mas liviano para demo)
+  demo_pixel_size_m: 500
+  demo_hectares_per_pixel: 25
+
+  # Parametros comunes
+  nodata_value: -9999
+  target_crs: EPSG:4326
+
+  # Output PNG
+  output_png_dpi: 150
+  output_png_format: PNG
+
+  # Configuracion del worker
+  compression: lzw
+  dtype: float32
+  tiled: true
+  blockxsize: 512
+  blockysize: 512

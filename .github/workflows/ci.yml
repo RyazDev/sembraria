@@ -63,10 +63,9 @@ jobs:
           pip install pytest pytest-asyncio httpx
 
       - name: Generate synthetic rasters (needed for tests)
-        working-directory: apps/api
         run: |
-          mkdir -p ../data/inputs
-          python ../scripts/data/generate_synthetic_rasters.py
+          mkdir -p data/inputs
+          python scripts/data/generate_synthetic_rasters.py
 
       - name: Create test .env
         working-directory: apps/api

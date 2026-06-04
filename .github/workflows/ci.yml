@@ -68,9 +68,8 @@ jobs:
           python scripts/data/generate_synthetic_rasters.py
 
       - name: Create test .env
-        working-directory: apps/api
         run: |
-          cat > ../.env <<'EOF'
+          cat > .env <<'EOF'
           APP_ENV=development
           APP_NAME=SembrarIA
           DATABASE_URL=postgresql+psycopg2://postgres:postgres@localhost:5432/sembraria_test
@@ -91,9 +90,11 @@ jobs:
 
       - name: Run migrations
         working-directory: apps/api
+        env:
+          DATABASE_URL: postgresql+psycopg2://postgres:postgres@localhost:5432/sembraria_test
         run: |
           python -c "
-          import sys; sys.path.insert(0, '.')
+          import os
           from sembraria.init_db import init_db
           init_db()
           print('migrations OK')
